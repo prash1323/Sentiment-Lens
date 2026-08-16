@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Insight Board — SentimentLens</title>
+<meta name="description" content="Review your analyzed signals and see how sentiment and emotion are shaping the overall picture.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=Inter:ital@0;1&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/analyze.css">
+<link rel="stylesheet" href="css/insights.css">
+</head>
+<body>
+
+<a class="skip-link" href="#board-content">Skip to content</a>
+
+<!-- LENSBAR -->
+<header class="lensbar" id="lensbar">
+  <div class="lensbar__inner">
+    <a href="index.html" class="lensbar__brand" aria-label="SentimentLens home">
+      <span class="lens-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="16" cy="16" r="10.5" stroke="currentColor" stroke-width="2"/>
+          <circle cx="16" cy="16" r="4" fill="currentColor"/>
+          <line x1="23.5" y1="23.5" x2="29" y2="29" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span class="lensbar__word">SentimentLens</span>
+    </a>
+
+    <nav class="lensbar__nav" id="primary-nav" aria-label="Primary">
+      <a href="analyze.html" class="lensbar__link">Analyze</a>
+      <a href="insights.html" class="lensbar__link lensbar__link--current" aria-current="page">Insight Board</a>
+      <a href="archive.html" class="lensbar__link">Archive</a>
+      <a href="index.html#about" class="lensbar__link">About</a>
+    </nav>
+
+    <div class="lensbar__actions">
+      <a href="analyze.html" class="btn btn--primary btn--sm">Analyze a Signal <span aria-hidden="true">→</span></a>
+      <button class="lensbar__toggle" id="navToggle" aria-expanded="false" aria-controls="mobileMenu" aria-label="Open menu">
+        <span class="toggle-bar"></span>
+        <span class="toggle-bar"></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="mobile-menu" id="mobileMenu" data-open="false">
+    <a href="analyze.html" class="mobile-menu__link">Analyze</a>
+    <a href="insights.html" class="mobile-menu__link" aria-current="page">Insight Board</a>
+    <a href="archive.html" class="mobile-menu__link">Archive</a>
+    <a href="index.html#about" class="mobile-menu__link">About</a>
+    <a href="analyze.html" class="btn btn--primary mobile-menu__cta">Analyze a Signal →</a>
+  </div>
+</header>
+
+<main id="board-content">
+
+  <!-- PAGE INTRO -->
+  <section class="workspace-intro">
+    <p class="eyebrow">Insight Board</p>
+    <h1 class="workspace-intro__title">See the bigger picture.</h1>
+    <p class="workspace-intro__sub">Review your analyzed signals and see how sentiment and emotion are shaping the overall picture.</p>
+  </section>
+
+  <!-- BOARD CONTENT (hidden entirely when empty) -->
+  <div id="boardContent">
+
+    <!-- OVERVIEW SUMMARY -->
+    <section class="board-summary">
+      <div class="summary-card">
+        <span class="field-label">Total Signals</span>
+        <p class="summary-card__value" id="statTotal">0</p>
+      </div>
+      <div class="summary-card summary-card--positive">
+        <span class="field-label">Positive</span>
+        <p class="summary-card__value" id="statPositive">0</p>
+      </div>
+      <div class="summary-card summary-card--neutral">
+        <span class="field-label">Neutral</span>
+        <p class="summary-card__value" id="statNeutral">0</p>
+      </div>
+      <div class="summary-card summary-card--negative">
+        <span class="field-label">Negative</span>
+        <p class="summary-card__value" id="statNegative">0</p>
+      </div>
+    </section>
+
+    <!-- SENTIMENT OVERVIEW -->
+    <section class="board-section">
+      <div class="section-heading section-heading--left">
+        <p class="eyebrow">Sentiment Overview</p>
+        <h2 class="section-heading__title">Where your signals are leaning.</h2>
+      </div>
+
+      <div class="distribution" id="distribution">
+        <div class="distribution__row">
+          <div class="distribution__label">
+            <span>Positive</span>
+            <span id="distPositivePct">0%</span>
+          </div>
+          <div class="distribution__track">
+            <div class="distribution__fill distribution__fill--positive" id="distPositiveFill" style="--fill:0%"></div>
+          </div>
+        </div>
+        <div class="distribution__row">
+          <div class="distribution__label">
+            <span>Neutral</span>
+            <span id="distNeutralPct">0%</span>
+          </div>
+          <div class="distribution__track">
+            <div class="distribution__fill distribution__fill--neutral" id="distNeutralFill" style="--fill:0%"></div>
+          </div>
+        </div>
+        <div class="distribution__row">
+          <div class="distribution__label">
+            <span>Negative</span>
+            <span id="distNegativePct">0%</span>
+          </div>
+          <div class="distribution__track">
+            <div class="distribution__fill distribution__fill--negative" id="distNegativeFill" style="--fill:0%"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RECENT SIGNALS -->
+    <section class="board-section">
+      <div class="section-heading section-heading--left">
+        <p class="eyebrow">Recent Signals</p>
+        <h2 class="section-heading__title">What the Lens has been reading.</h2>
+      </div>
+
+      <div class="board-filters" role="group" aria-label="Filter signals by sentiment">
+        <button type="button" class="filter-chip is-active" data-filter="all">All</button>
+        <button type="button" class="filter-chip" data-filter="positive">Positive</button>
+        <button type="button" class="filter-chip" data-filter="neutral">Neutral</button>
+        <button type="button" class="filter-chip" data-filter="negative">Negative</button>
+      </div>
+
+      <div class="signal-list" id="signalList" aria-live="polite"></div>
+
+      <p class="filter-empty" id="filterEmpty" hidden>No signals match this filter yet.</p>
+    </section>
+
+    <!-- CLEAR BOARD -->
+    <section class="board-footer-actions">
+      <button type="button" class="link-quiet link-quiet--danger" id="clearBoardBtn">Clear Board</button>
+      <div class="clear-confirm" id="clearConfirm" hidden>
+        <span>Clear all saved signals? This can't be undone.</span>
+        <button type="button" class="btn btn--ghost btn--sm" id="clearCancelBtn">Cancel</button>
+        <button type="button" class="btn btn--primary btn--sm btn--danger" id="clearConfirmBtn">Clear Board</button>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- EMPTY STATE -->
+  <section class="board-empty" id="boardEmpty" hidden>
+    <span class="readout-state__icon" aria-hidden="true">
+      <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="10.5" stroke="currentColor" stroke-width="1.6"/><circle cx="16" cy="16" r="3.5" fill="currentColor"/></svg>
+    </span>
+    <p class="board-empty__title">Your board is still quiet.</p>
+    <p class="board-empty__sub">Analyze a signal to start building your picture.</p>
+    <a href="analyze.html" class="btn btn--primary btn--lg">Analyze a Signal <span aria-hidden="true">→</span></a>
+  </section>
+
+</main>
+
+<!-- THE CLOSING FRAME -->
+<footer class="closing-frame" id="about">
+  <div class="closing-frame__inner">
+    <div class="closing-frame__brand">
+      <a href="index.html" class="lensbar__brand">
+        <span class="lens-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="10.5" stroke="currentColor" stroke-width="2"/><circle cx="16" cy="16" r="4" fill="currentColor"/><line x1="23.5" y1="23.5" x2="29" y2="29" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </span>
+        <span class="lensbar__word">SentimentLens</span>
+      </a>
+      <p class="closing-frame__tagline">Understand the signal behind the words.</p>
+    </div>
+
+    <div class="closing-frame__links">
+      <div class="closing-frame__col">
+        <span class="closing-frame__col-title">Product</span>
+        <a href="analyze.html">Analyze</a>
+        <a href="insights.html">Insight Board</a>
+        <a href="archive.html">Archive</a>
+      </div>
+      <div class="closing-frame__col">
+        <span class="closing-frame__col-title">About</span>
+        <a href="index.html#about">Project</a>
+        <a href="index.html#about">Technology</a>
+        <a href="index.html#about">Contact</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="closing-frame__bottom">
+    <span>© 2026 SentimentLens</span>
+    <span>Built with NLP</span>
+  </div>
+</footer>
+
+<script src="js/script.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/insights.js"></script>
+</body>
+</html>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SentimentLens — See what your words are really saying.</title>
+<meta name="description" content="SentimentLens turns text into clear sentiment and emotional insight in seconds.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=Inter:ital@0;1&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<a class="skip-link" href="#first-look">Skip to content</a>
+
+<!-- LENSBAR -->
+<header class="lensbar" id="lensbar">
+  <div class="lensbar__inner">
+    <a href="#" class="lensbar__brand" aria-label="SentimentLens home">
+      <span class="lens-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="16" cy="16" r="10.5" stroke="currentColor" stroke-width="2"/>
+          <circle cx="16" cy="16" r="4" fill="currentColor"/>
+          <line x1="23.5" y1="23.5" x2="29" y2="29" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span class="lensbar__word">SentimentLens</span>
+    </a>
+
+    <nav class="lensbar__nav" id="primary-nav" aria-label="Primary">
+      <a href="analyze.html" class="lensbar__link">Analyze</a>
+      <a href="insights.html" class="lensbar__link">Insight Board</a>
+      <a href="archive.html" class="lensbar__link">Archive</a>
+      <a href="#about" class="lensbar__link">About</a>
+    </nav>
+
+    <div class="lensbar__actions">
+      <a href="analyze.html" class="btn btn--primary btn--sm">Analyze a Signal <span aria-hidden="true">→</span></a>
+      <button class="lensbar__toggle" id="navToggle" aria-expanded="false" aria-controls="mobileMenu" aria-label="Open menu">
+        <span class="toggle-bar"></span>
+        <span class="toggle-bar"></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="mobile-menu" id="mobileMenu" data-open="false">
+    <a href="analyze.html" class="mobile-menu__link">Analyze</a>
+    <a href="insights.html" class="mobile-menu__link">Insight Board</a>
+    <a href="archive.html" class="mobile-menu__link">Archive</a>
+    <a href="#about" class="mobile-menu__link">About</a>
+    <a href="analyze.html" class="btn btn--primary mobile-menu__cta">Analyze a Signal →</a>
+  </div>
+</header>
+
+<main id="first-look">
+
+  <!-- THE FIRST LOOK -->
+  <section class="first-look">
+    <div class="first-look__inner">
+      <div class="first-look__copy reveal">
+        <p class="eyebrow">The First Look</p>
+        <h1 class="first-look__headline">See what your words<br>are really saying.</h1>
+        <p class="first-look__sub">Turn text into clear sentiment and emotional insights in seconds. Understand the tone behind words — not just the words themselves.</p>
+        <div class="first-look__ctas">
+          <a href="analyze.html" class="btn btn--primary btn--lg">Analyze a Signal <span aria-hidden="true">→</span></a>
+          <a href="#inside-the-lens" class="link-quiet">Explore how it works <span aria-hidden="true">↓</span></a>
+        </div>
+      </div>
+
+      <div class="first-look__preview reveal" id="lens-workspace">
+        <div class="analysis-preview" id="analysisPreview" tabindex="0">
+          <div class="analysis-preview__header">
+            <span class="analysis-preview__eyebrow">Sentiment Readout</span>
+            <span class="analysis-preview__dot" aria-hidden="true"></span>
+          </div>
+
+          <blockquote class="analysis-preview__signal">
+            <p>“<span id="signalText">The product looks beautiful, but the battery is awful.</span>”</p>
+          </blockquote>
+
+          <div class="analysis-preview__divider" role="separator"></div>
+
+          <div class="analysis-preview__row">
+            <div class="analysis-preview__field">
+              <span class="field-label">Sentiment</span>
+              <span class="sentiment-tag sentiment-tag--negative" id="sentimentTag">Negative</span>
+            </div>
+            <div class="analysis-preview__field analysis-preview__field--right">
+              <span class="field-label">Model Certainty</span>
+              <span class="certainty-value" id="certaintyValue">78%</span>
+            </div>
+          </div>
+
+          <div class="analysis-preview__field">
+            <span class="field-label">Emotional Signal</span>
+            <span class="emotion-value" id="emotionValue">Disappointment</span>
+          </div>
+
+          <div class="polarity-meter" aria-hidden="true">
+            <span class="polarity-meter__label polarity-meter__label--pos">Positive</span>
+            <div class="polarity-meter__track">
+              <div class="polarity-meter__fill" id="polarityFill"></div>
+              <div class="polarity-meter__handle" id="polarityHandle"></div>
+            </div>
+            <span class="polarity-meter__label polarity-meter__label--neg">Negative</span>
+          </div>
+
+          <button class="analysis-preview__cycle" id="cycleBtn" aria-label="Try another example signal">
+            Try another signal <span aria-hidden="true">⟳</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT THE LENS SEES -->
+  <section class="lens-signals" id="what-the-lens-sees">
+    <div class="section-heading reveal">
+      <p class="eyebrow">What the Lens Sees</p>
+      <h2 class="section-heading__title">Three signals. One clearer picture.</h2>
+    </div>
+
+    <div class="lens-signals__grid">
+      <article class="signal-card reveal">
+        <div class="signal-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="9" stroke="currentColor" stroke-width="2"/><circle cx="16" cy="16" r="2.4" fill="currentColor"/></svg>
+        </div>
+        <h3 class="signal-card__title">Sentiment</h3>
+        <p class="signal-card__desc">Understand whether the overall tone of a message leans positive, negative, or neutral.</p>
+        <div class="mini-polarity" aria-hidden="true">
+          <span class="mini-polarity__label">Positive</span>
+          <div class="mini-polarity__track"><span class="mini-polarity__dot"></span></div>
+          <span class="mini-polarity__label">Negative</span>
+        </div>
+      </article>
+
+      <article class="signal-card reveal">
+        <div class="signal-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none"><path d="M16 6c-5 0-9 4-9 9s4 9 9 9 9-4 9-9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="16" cy="15" r="2.2" fill="currentColor"/></svg>
+        </div>
+        <h3 class="signal-card__title">Emotion</h3>
+        <p class="signal-card__desc">Detect the emotional tone behind the words and reveal the feeling driving the message.</p>
+        <div class="emotion-chips" aria-hidden="true">
+          <span class="emotion-chip emotion-chip--active">Disappointment</span>
+          <span class="emotion-chip">Frustration</span>
+          <span class="emotion-chip">Relief</span>
+        </div>
+      </article>
+
+      <article class="signal-card reveal">
+        <div class="signal-card__icon" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none"><rect x="5" y="14" width="4" height="12" fill="currentColor"/><rect x="14" y="8" width="4" height="18" fill="currentColor"/><rect x="23" y="4" width="4" height="22" fill="currentColor"/></svg>
+        </div>
+        <h3 class="signal-card__title">Model Certainty</h3>
+        <p class="signal-card__desc">See how confident the system is about its interpretation of the text.</p>
+        <div class="certainty-bar" role="img" aria-label="91 percent certainty">
+          <div class="certainty-bar__fill" style="--fill:91%"></div>
+          <span class="certainty-bar__value">91%</span>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- INSIDE THE LENS -->
+  <section class="lens-workflow" id="inside-the-lens">
+    <div class="section-heading reveal">
+      <p class="eyebrow">Inside the Lens</p>
+      <h2 class="section-heading__title">From raw words to meaningful signals.</h2>
+    </div>
+
+    <ol class="lens-workflow__steps">
+      <li class="lens-workflow__step reveal">
+        <span class="lens-workflow__index">01</span>
+        <h3 class="lens-workflow__label">Read</h3>
+        <p class="lens-workflow__desc">Clean and prepare the text for analysis.</p>
+      </li>
+      <li class="lens-workflow__connector" aria-hidden="true"></li>
+      <li class="lens-workflow__step reveal">
+        <span class="lens-workflow__index">02</span>
+        <h3 class="lens-workflow__label">Interpret</h3>
+        <p class="lens-workflow__desc">Analyze sentiment and emotional patterns.</p>
+      </li>
+      <li class="lens-workflow__connector" aria-hidden="true"></li>
+      <li class="lens-workflow__step reveal">
+        <span class="lens-workflow__index">03</span>
+        <h3 class="lens-workflow__label">Reveal</h3>
+        <p class="lens-workflow__desc">Turn predictions into clear, understandable insights.</p>
+      </li>
+    </ol>
+
+    <div class="signal-strip reveal" aria-hidden="true">
+      <span class="signal-strip__node">Text</span>
+      <span class="signal-strip__arrow">→</span>
+      <span class="signal-strip__node signal-strip__node--lens">Lens</span>
+      <span class="signal-strip__arrow">→</span>
+      <span class="signal-strip__node">Sentiment</span>
+      <span class="signal-strip__arrow">→</span>
+      <span class="signal-strip__node">Emotion</span>
+      <span class="signal-strip__arrow">→</span>
+      <span class="signal-strip__node signal-strip__node--insight">Insight</span>
+    </div>
+  </section>
+
+  <!-- FINAL CALL TO ACTION -->
+  <section class="closing-cta" id="closing-cta">
+    <div class="closing-cta__inner reveal">
+      <p class="eyebrow eyebrow--on-dark">Ready to Look Closer?</p>
+      <h2 class="closing-cta__title">Put your text under the Lens.</h2>
+      <p class="closing-cta__sub">Discover the sentiment and emotional signals hidden inside your words.</p>
+      <a href="analyze.html" class="btn btn--primary btn--lg">Analyze a Signal <span aria-hidden="true">→</span></a>
+    </div>
+  </section>
+
+</main>
+
+<!-- THE CLOSING FRAME -->
+<footer class="closing-frame" id="about">
+  <div class="closing-frame__inner">
+    <div class="closing-frame__brand">
+      <a href="#" class="lensbar__brand">
+        <span class="lens-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="10.5" stroke="currentColor" stroke-width="2"/><circle cx="16" cy="16" r="4" fill="currentColor"/><line x1="23.5" y1="23.5" x2="29" y2="29" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </span>
+        <span class="lensbar__word">SentimentLens</span>
+      </a>
+      <p class="closing-frame__tagline">Understand the signal behind the words.</p>
+    </div>
+
+    <div class="closing-frame__links">
+      <div class="closing-frame__col">
+        <span class="closing-frame__col-title">Product</span>
+        <a href="analyze.html">Analyze</a>
+        <a href="insights.html">Insight Board</a>
+        <a href="archive.html">Archive</a>
+      </div>
+      <div class="closing-frame__col">
+        <span class="closing-frame__col-title">About</span>
+        <a href="#about">Project</a>
+        <a href="#about">Technology</a>
+        <a href="#about">Contact</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="closing-frame__bottom">
+    <span>© 2026 SentimentLens</span>
+    <span>Built with NLP</span>
+  </div>
+</footer>
+
+<script src="js/script.js"></script>
+</body>
+</html>

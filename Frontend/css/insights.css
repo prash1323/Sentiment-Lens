@@ -1,0 +1,268 @@
+/* ==========================================================================
+   Insight Board — page-specific styles
+   Builds on tokens/components from style.css and analyze.css
+   ========================================================================== */
+
+.section-heading--left {
+  text-align: left;
+  margin: 0 0 28px;
+  max-width: none;
+  padding: 0;
+}
+.section-heading--left .eyebrow { justify-content: flex-start; }
+
+#boardContent,
+.board-empty {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 0 24px 100px;
+}
+
+/* ==========================================================================
+   Summary cards
+   ========================================================================== */
+.board-summary {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-bottom: 56px;
+}
+.summary-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  padding: 22px 24px;
+}
+.summary-card__value {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 2rem;
+  color: var(--color-ink);
+  margin: 8px 0 0;
+  font-variant-numeric: tabular-nums;
+}
+.summary-card--positive .summary-card__value { color: var(--color-positive); }
+.summary-card--neutral .summary-card__value { color: var(--color-neutral); }
+.summary-card--negative .summary-card__value { color: var(--color-negative); }
+
+@media (max-width: 760px) {
+  .board-summary { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 440px) {
+  .board-summary { grid-template-columns: 1fr; }
+}
+
+/* ==========================================================================
+   Section spacing
+   ========================================================================== */
+.board-section { margin-bottom: 60px; }
+
+/* ==========================================================================
+   Distribution bars
+   ========================================================================== */
+.distribution {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+.distribution__row { display: flex; flex-direction: column; gap: 8px; }
+.distribution__label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--color-ink);
+}
+.distribution__label span:last-child { font-variant-numeric: tabular-nums; color: var(--color-ink-muted); }
+.distribution__track {
+  height: 10px;
+  border-radius: 6px;
+  background: var(--color-neutral-soft);
+  overflow: hidden;
+}
+.distribution__fill {
+  height: 100%;
+  width: var(--fill, 0%);
+  border-radius: 6px;
+  transition: width 0.9s var(--ease);
+}
+.distribution__fill--positive { background: var(--color-positive); }
+.distribution__fill--neutral { background: var(--color-neutral); }
+.distribution__fill--negative { background: var(--color-negative); }
+
+/* ==========================================================================
+   Filters
+   ========================================================================== */
+.board-filters {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+}
+.filter-chip {
+  flex-shrink: 0;
+  padding: 9px 18px;
+  border-radius: 999px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  font-weight: 600;
+  font-size: 0.86rem;
+  color: var(--color-ink-muted);
+  transition: border-color 0.2s var(--ease), color 0.2s var(--ease), background 0.2s var(--ease);
+}
+.filter-chip:hover { border-color: #CFCABF; color: var(--color-ink); }
+.filter-chip.is-active {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #fff;
+}
+
+/* ==========================================================================
+   Signal list
+   ========================================================================== */
+.signal-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 18px;
+}
+
+.signal-record {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  padding: 22px 22px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.45s var(--ease), transform 0.45s var(--ease), box-shadow 0.25s var(--ease);
+}
+.signal-record.is-visible { opacity: 1; transform: translateY(0); }
+.signal-record:hover { box-shadow: var(--shadow-card-hover); }
+.signal-record.is-removing {
+  opacity: 0;
+  transform: translateY(-6px) scale(0.98);
+}
+
+.signal-record__quote {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.98rem;
+  line-height: 1.45;
+  color: var(--color-ink);
+}
+
+.signal-record__meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.signal-record__emotion {
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--color-ink-muted);
+}
+
+.signal-record__certainty {
+  font-size: 0.82rem;
+  color: var(--color-ink-muted);
+}
+
+.signal-record__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 10px;
+  border-top: 1px solid var(--color-border);
+}
+.signal-record__time {
+  font-size: 0.78rem;
+  color: var(--color-ink-muted);
+}
+.signal-record__remove {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--color-ink-muted);
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: color 0.2s var(--ease), background 0.2s var(--ease);
+}
+.signal-record__remove:hover { color: var(--color-negative); background: var(--color-negative-soft); }
+
+.filter-empty {
+  text-align: center;
+  color: var(--color-ink-muted);
+  padding: 32px 0;
+  font-size: 0.94rem;
+}
+
+/* ==========================================================================
+   Clear board
+   ========================================================================== */
+.board-footer-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding-top: 8px;
+}
+.link-quiet--danger { color: var(--color-ink-muted); border-color: var(--color-border); }
+.link-quiet--danger:hover { color: var(--color-negative); border-color: var(--color-negative); }
+
+.clear-confirm {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-size: 0.88rem;
+  color: var(--color-ink-muted);
+  background: var(--color-negative-soft);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+}
+.btn--danger { background: var(--color-negative); box-shadow: none; }
+.btn--danger:hover { background: #C22F4A; }
+
+/* ==========================================================================
+   Empty state (whole board)
+   ========================================================================== */
+.board-empty {
+  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 120px;
+}
+.board-empty .readout-state__icon {
+  margin: 0 auto 18px;
+}
+.board-empty__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: var(--color-ink);
+  margin: 0 0 8px;
+}
+.board-empty__sub {
+  color: var(--color-ink-muted);
+  margin: 0 0 26px;
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+@media (max-width: 640px) {
+  .distribution { padding: 22px; }
+  .signal-list { grid-template-columns: 1fr; }
+}

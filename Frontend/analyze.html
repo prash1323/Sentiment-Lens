@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lens Workspace — SentimentLens</title>
+<meta name="description" content="Paste text and let SentimentLens read the sentiment, emotion, and model certainty behind it.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=Inter:ital@0;1&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/analyze.css">
+</head>
+<body>
+
+<a class="skip-link" href="#your-signal">Skip to content</a>
+
+<!-- LENSBAR -->
+<header class="lensbar" id="lensbar">
+  <div class="lensbar__inner">
+    <a href="index.html" class="lensbar__brand" aria-label="SentimentLens home">
+      <span class="lens-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="16" cy="16" r="10.5" stroke="currentColor" stroke-width="2"/>
+          <circle cx="16" cy="16" r="4" fill="currentColor"/>
+          <line x1="23.5" y1="23.5" x2="29" y2="29" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span class="lensbar__word">SentimentLens</span>
+    </a>
+
+    <nav class="lensbar__nav" id="primary-nav" aria-label="Primary">
+      <a href="analyze.html" class="lensbar__link lensbar__link--current" aria-current="page">Analyze</a>
+      <a href="insights.html" class="lensbar__link">Insight Board</a>
+      <a href="archive.html" class="lensbar__link">Archive</a>
+      <a href="index.html#about" class="lensbar__link">About</a>
+    </nav>
+
+    <div class="lensbar__actions">
+      <a href="#your-signal" class="btn btn--primary btn--sm">Jump to Signal <span aria-hidden="true">↓</span></a>
+      <button class="lensbar__toggle" id="navToggle" aria-expanded="false" aria-controls="mobileMenu" aria-label="Open menu">
+        <span class="toggle-bar"></span>
+        <span class="toggle-bar"></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="mobile-menu" id="mobileMenu" data-open="false">
+    <a href="analyze.html" class="mobile-menu__link" aria-current="page">Analyze</a>
+    <a href="insights.html" class="mobile-menu__link">Insight Board</a>
+    <a href="archive.html" class="mobile-menu__link">Archive</a>
+    <a href="index.html#about" class="mobile-menu__link">About</a>
+    <a href="#your-signal" class="btn btn--primary mobile-menu__cta">Jump to Signal ↓</a>
+  </div>
+</header>
+
+<main>
+
+  <!-- WORKSPACE INTRO -->
+  <section class="workspace-intro">
+    <p class="eyebrow">Lens Workspace</p>
+    <h1 class="workspace-intro__title">Give the Lens something to read.</h1>
+    <p class="workspace-intro__sub">Paste a message, review, comment, or any piece of text and uncover the sentiment and emotional signal behind it.</p>
+  </section>
+
+  <!-- WORKSPACE GRID -->
+  <section class="workspace-grid" id="your-signal">
+
+    <!-- YOUR SIGNAL -->
+    <div class="signal-panel">
+      <h2 class="panel-label">Your Signal</h2>
+
+      <form id="signalForm" novalidate>
+        <div class="signal-field">
+          <label for="signalInput" class="visually-hidden">Your Signal — paste the text you want analyzed</label>
+          <textarea
+            id="signalInput"
+            class="signal-field__textarea"
+            placeholder="Paste your text here..."
+            rows="7"
+            aria-describedby="charCount inputError"
+          ></textarea>
+        </div>
+
+        <div class="signal-field__meta">
+          <span id="charCount" class="char-count">0 characters</span>
+          <div class="signal-field__buttons">
+            <button type="button" id="clearBtn" class="btn btn--ghost btn--sm">Clear</button>
+            <button type="submit" id="analyzeBtn" class="btn btn--primary btn--sm" disabled>
+              Analyze Signal <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </div>
+
+        <p id="inputError" class="input-error" role="alert" hidden>Give the Lens something to read first.</p>
+      </form>
+
+      <div class="try-signal">
+        <span class="try-signal__label">Try a signal</span>
+        <div class="try-signal__options">
+          <button type="button" class="example-chip" data-example="The customer support was incredibly helpful.">
+            “The customer support was incredibly helpful.”
+          </button>
+          <button type="button" class="example-chip" data-example="The product looks good, but the battery is disappointing.">
+            “The product looks good, but the battery is disappointing.”
+          </button>
+          <button type="button" class="example-chip" data-example="The package arrived on time.">
+            “The package arrived on time.”
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- THE READOUT -->
+    <div class="readout-panel" aria-live="polite">
+
+      <!-- Empty state -->
+      <div class="readout-state readout-state--empty" id="emptyState">
+        <span class="readout-state__icon" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="10.5" stroke="currentColor" stroke-width="1.6"/><circle cx="16" cy="16" r="3.5" fill="currentColor"/></svg>
+        </span>
+        <p class="readout-state__title">Your readout will appear here.</p>
+        <p class="readout-state__sub">Give the Lens a signal to begin.</p>
+      </div>
+
+      <!-- Loading state -->
+      <div class="readout-state readout-state--loading" id="loadingState" hidden>
+        <span class="loading-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <p class="readout-state__title">Reading your signal...</p>
+      </div>
+
+      <!-- Result state -->
+      <div class="readout-result" id="resultState" hidden>
+        <div class="readout-result__header">
+          <span class="analysis-preview__eyebrow">The Readout</span>
+        </div>
+
+        <div class="readout-result__primary">
+          <div class="readout-result__field">
+            <span class="field-label">Overall Sentiment</span>
+            <span class="sentiment-tag sentiment-tag--negative sentiment-tag--lg" id="resultSentiment">Negative</span>
+          </div>
+          <div class="readout-result__field readout-result__field--right">
+            <span class="field-label">Model Certainty</span>
+            <span class="certainty-value certainty-value--lg" id="resultCertainty">87%</span>
+          </div>
+        </div>
+
+        <div class="readout-result__field">
+          <span class="field-label">Emotional Signal</span>
+          <span class="emotion-value" id="resultEmotion">Disappointment</span>
+        </div>
+
+        <div class="polarity-meter" aria-hidden="true">
+          <span class="polarity-meter__label polarity-meter__label--pos">Positive</span>
+          <div class="polarity-meter__track">
+            <div class="polarity-meter__handle" id="resultPolarityHandle"></div>
+          </div>
+          <span class="polarity-meter__label polarity-meter__label--neg">Negative</span>
+        </div>
+
+        <button type="button" class="btn btn--ghost btn--sm save-insight-btn" id="saveInsightBtn">
+          Save to Insight Board
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORKSPACE DETAIL: original signal + breakdown -->
+  <section class="workspace-detail" id="workspaceDetail" hidden>
+
+    <div class="signal-original">
+      <h2 class="panel-label">The Signal</h2>
+      <blockquote class="signal-original__quote">
+        <p>“<span id="originalSignalText"></span>”</p>
+      </blockquote>
+    </div>
+
+    <div class="section-heading">
+      <p class="eyebrow">Result Breakdown</p>
+      <h2 class="section-heading__title">Every angle of the reading.</h2>
+    </div>
+
+    <div class="lens-signals__grid">
+      <article class="signal-card">
+        <span class="field-label">Sentiment</span>
+        <p class="breakdown-card__value" id="breakdownSentiment">Negative</p>
+        <p class="breakdown-card__note" id="breakdownCertaintyNote">78% certainty</p>
+      </article>
+
+      <article class="signal-card">
+        <span class="field-label">Emotion</span>
+        <p class="breakdown-card__value" id="breakdownEmotion">Disappointment</p>
+        <p class="breakdown-card__note">Primary emotional tone</p>
+      </article>
+
+      <article class="signal-card">
+        <span class="field-label">Model Certainty</span>
+        <div class="certainty-bar certainty-bar--breakdown" role="img" id="breakdownCertaintyBar" aria-label="87 percent certainty">
+          <div class="certainty-bar__fill" id="breakdownCertaintyFill" style="--fill:0%"></div>
+        </div>
+        <p class="breakdown-card__note" id="breakdownCertaintyValue">87%</p>
+      </article>
+    </div>
+  </section>
+
+</main>
+
+<!-- THE CLOSING FRAME -->
+<footer class="closing-frame" id="about">
+  <div class="closing-frame__inner">
+    <div class="closing-frame__brand">
+      <a href="index.html" class="lensbar__brand">
+        <span class="lens-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="10.5" stroke="currentColor" stroke-width="2"/><circle cx="16" cy="16" r="4" fill="currentColor"/><line x1="23.5" y1="23.5" x2="29" y2="29" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </span>
+        <span class="lensbar__word">SentimentLens</span>
+      </a>
+      <p class="closing-frame__tagline">Understand the signal behind the words.</p>
+    </div>
+
+    <div class="closing-frame__links">
+      <div class="closing-frame__col">
+        <span class="closing-frame__col-title">Product</span>
+        <a href="analyze.html">Analyze</a>
+        <a href="insights.html">Insight Board</a>
+        <a href="archive.html">Archive</a>
+      </div>
+      <div class="closing-frame__col">
+        <span class="closing-frame__col-title">About</span>
+        <a href="index.html#about">Project</a>
+        <a href="index.html#about">Technology</a>
+        <a href="index.html#about">Contact</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="closing-frame__bottom">
+    <span>© 2026 SentimentLens</span>
+    <span>Built with NLP</span>
+  </div>
+</footer>
+
+<script src="js/script.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/analyze.js"></script>
+</body>
+</html>
